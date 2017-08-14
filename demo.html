@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/react/dist/react.js"></script>
+    <script src="node_modules/react-dom/dist/react-dom.js"></script>
+    <script src="node_modules/babel-standalone/babel.js"></script>
+    <style>
+        #all {
+            width: 650px;
+            margin: 0 auto;
+        }
+
+        #Header {
+            background-color: deepskyblue;
+            overflow: hidden;
+        }
+
+        #Content {
+            width: 620px;
+            margin: 0 auto;
+        }
+
+        .sixs {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .two {
+            width: 30px;
+            height: 30px;
+            float: right;
+            margin: 10px 20px;
+            border: 1px solid darkgray;
+            background-color: darkgray;
+        }
+
+        .six {
+            width: 300px;
+            height: 300px;
+            float: left;
+            margin: 5px;
+        }
+
+        .line {
+            border-bottom: 2px solid darkgray;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    var array = ['https://tutorialzine.com/media/2016/03/css-variables.jpg',
+        'https://tutorialzine.com/media/2016/02/great-looking-pricing-tables.jpg'
+        , 'https://tutorialzine.com/media/2016/02/interesting-resources-february.jpg',
+        'https://tutorialzine.com/media/2016/02/quick-tip-responsive-headers.png'
+        , 'https://tutorialzine.com/media/2016/01/learn-sql-20-minutes.png',
+        'https://tutorialzine.com/media/2015/12/creating-your-first-desktop-app-with-electron.png']
+
+
+    class Grade extends React.Component {
+        render() {
+            return (
+                    <div>
+                        <img src="images/grade.png" alt="" className="two" onClick={this.props.click}/>
+                    </div>
+            )
+        }
+    }
+    class List extends React.Component {
+        render() {
+            return (
+                    <div>
+                        <img src="images/list.png" alt="" className="two" onClick={this.props.click}/>
+                    </div>
+            )
+        }
+    }
+
+    class LayoutControl extends React.Component {
+//        static defaultProps = {
+//            array: {array}
+//        }
+
+        constructor(props) {
+            //继承父类属性和方法
+            super(props)
+
+            this.state = {
+                layout: 'grid'
+            }
+        }
+
+
+        listClick = ()=> {
+            this.setState({
+                layout: 'list'
+            })
+        };
+
+        gridClick = ()=> {
+            this.setState({
+                layout: 'grid'
+            })
+        };
+
+
+        render() {
+            console.log(this.state.layout)
+            if (this.state.layout === 'grid') {
+                return (
+                        <div id="all">
+                            <div id="Header">
+                                <Grade click={this.gridClick}/>
+                                <List click={this.listClick}/>
+                            </div>
+                            <div id="Content">{
+                                array.map(function (item, index) {
+                                    return <div key={index}><img src={item} alt="" className="six"/></div>
+                                })
+                            }
+                            </div>
+                        </div>
+                )
+            } else {
+                return (
+                        <div id="all">
+                            <div id="Header">
+                                <Grade click={this.gridClick}/>
+                                <List click={this.listClick}/>
+                            </div>
+
+                            <div id="Content">{
+                                array.map(function (item, index) {
+                                    return <div className="line" key={index}><img src={item} alt="" className="sixs"/>
+                                    </div>
+                                })
+                            }
+                            </div>
+                        </div>
+                )
+
+            }
+        }
+
+    }
+
+
+
+
+
+    ReactDOM.render(
+            <LayoutControl/>,
+            document.getElementById('root')
+    )
+
+
+</script>
+</body>
+</html>
